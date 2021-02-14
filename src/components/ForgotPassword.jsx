@@ -1,25 +1,27 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Login() {
     const emailRef = useRef();
-    const passwordRef = useRef();
-    const { login } = useAuth();
+    const { resetPassword } = useAuth();
     const [error, setError] = useState("");
+    const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
-    const history = useHistory();
 
     async function handleSubmit(e) {
         e.preventDefault();
 
         try {
+            setMessage("");
             setError("");
             setLoading(true);
-            await login(emailRef.current.value, passwordRef.current.value);
-            history.push("/");
+            await resetPassword(emailRef.current.value);
+            setMessage("Check your inbox for further instructions!");
         } catch {
-            setError("Failed to log in!");
+            setError(
+                "We don't have any user with this email... try checking your email"
+            );
         }
         setLoading(false);
     }
@@ -28,8 +30,9 @@ export default function Login() {
         <>
             <div>
                 <div>
-                    <h2 className="text-center mb-4">Log In</h2>
+                    <h2 className="text-center mb-4">Password Reset</h2>
                     {error && error}
+                    {message && message}
                     {/* {currentUser.email} */}
                     <form action="" onSubmit={handleSubmit}>
                         <div id="email">
@@ -41,21 +44,17 @@ export default function Login() {
                                 className="border-black border-opacity-100 border-4"
                             />
                         </div>
-                        <div id="password">
-                            <label htmlFor="">Password</label>
-                            <input type="password" required ref={passwordRef} />
-                        </div>
 
                         <button
                             className="w-full"
                             type="submit"
                             disabled={loading}
                         >
-                            Log In
+                            Reset Password
                         </button>
                     </form>
                     <div className=" w-full text-center mt-4 ">
-                        <Link to="/forgot-password">Forgot password?</Link>
+                        <Link to="/login">Log in</Link>
                     </div>
                 </div>
             </div>

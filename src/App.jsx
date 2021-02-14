@@ -1,13 +1,16 @@
 import { TextField } from "@material-ui/core";
 import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
 import { db } from "./firebase_config";
 import firebase from "firebase";
 import TodoListTimes from "./components/TodoListItems";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
-import { AuthProvider } from "./contexts/AuthContext";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
+import ForgotPassword from "./components/ForgotPassword";
+import UpdateProfile from "./components/UpdateProfile";
 
 function App() {
     const [todoInput, setTodoInput] = useState("");
@@ -46,9 +49,22 @@ function App() {
             <Router>
                 <AuthProvider>
                     <Switch>
-                        <Route exact path="/" component={Dashboard}></Route>
+                        <PrivateRoute
+                            exact
+                            path="/"
+                            component={Dashboard}
+                        ></PrivateRoute>
+                        <PrivateRoute
+                            path="/update-profile"
+                            component={UpdateProfile}
+                        ></PrivateRoute>
                         <Route path="/signup" component={Signup}></Route>
                         <Route exact path="/login" component={Login}></Route>
+                        <Route
+                            exact
+                            path="/forgot-password"
+                            component={ForgotPassword}
+                        ></Route>
                     </Switch>
                 </AuthProvider>
             </Router>
