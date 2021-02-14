@@ -2,7 +2,10 @@ import { TextField } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { db } from "./firebase_config";
 import firebase from "firebase";
-import TodoListTimes from "./TodoListItems";
+import TodoListTimes from "./components/TodoListItems";
+import Signup from "./components/Signup";
+import { AuthProvider } from "./contexts/AuthContext";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
     const [todoInput, setTodoInput] = useState("");
@@ -38,6 +41,13 @@ function App() {
 
     return (
         <>
+            <Router>
+                <AuthProvider>
+                    <Switch>
+                        <Route path="/signup" component={Signup}></Route>
+                    </Switch>
+                </AuthProvider>
+            </Router>
             <div className="flex flex-col justify-items-center items-center">
                 <h1 className="">Shareef Todo App</h1>
                 <form action="">
@@ -46,12 +56,6 @@ function App() {
                         label="Write a Todo"
                         value={todoInput}
                         onChange={(e) => setTodoInput(e.target.value)}
-                        // onKeyDown={(e) => {
-                        //     if (e.key == "Enter") {
-                        //         setTodoInput(e.target.value);
-                        //         console.log(todoInput);
-                        //     }
-                        // }}
                         variant="outlined"
                     />
                     <button
