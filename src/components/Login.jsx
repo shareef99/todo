@@ -2,11 +2,10 @@ import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 
-export default function Signup() {
+export default function Login() {
     const emailRef = useRef();
     const passwordRef = useRef();
-    const passwordConfirmRef = useRef();
-    const { signUp } = useAuth();
+    const { login } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -14,16 +13,13 @@ export default function Signup() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-            return setError("Passwords don't match!");
-        }
         try {
             setError("");
             setLoading(true);
-            await signUp(emailRef.current.value, passwordRef.current.value);
+            await login(emailRef.current.value, passwordRef.current.value);
             history.push("/");
         } catch {
-            setError("Failed to create account!");
+            setError("Failed to log in!");
         }
         setLoading(false);
     }
@@ -32,8 +28,8 @@ export default function Signup() {
         <>
             <div>
                 <div>
-                    <h2 className="text-center mb-4">Sign up</h2>
-                    {error && <span>{error}</span>}
+                    <h2 className="text-center mb-4">Log In</h2>
+                    {error && error}
                     {/* {currentUser.email} */}
                     <form action="" onSubmit={handleSubmit}>
                         <div id="email">
@@ -49,26 +45,19 @@ export default function Signup() {
                             <label htmlFor="">Password</label>
                             <input type="password" required ref={passwordRef} />
                         </div>
-                        <div id="passwordConfirm">
-                            <label htmlFor="">Password confirmation</label>
-                            <input
-                                type="password"
-                                required
-                                ref={passwordConfirmRef}
-                            />
-                        </div>
+
                         <button
                             className="w-full"
                             type="submit"
                             disabled={loading}
                         >
-                            Sign Up
+                            Log In
                         </button>
                     </form>
                 </div>
             </div>
             <div className=" w-full text-center mt-2 ">
-                Already have an account ? <Link to="/login">Log in</Link>
+                Need an account ? <Link to="/signup">Sign up</Link>
             </div>
         </>
     );

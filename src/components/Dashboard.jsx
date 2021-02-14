@@ -1,0 +1,30 @@
+import React, { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
+
+export default function Dashboard() {
+    const [error, setError] = useState("");
+    const { currentUser } = useAuth();
+
+    function handleLogout() {}
+
+    return (
+        <>
+            <div>
+                <div>
+                    <h2 className="text-center mb-4">Profile</h2>
+                    {error && error}
+                    <strong>Email: </strong> {currentUser.email}
+                    <div>
+                        <button>
+                            <Link to="/update-profile">Update Profile</Link>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div className=" w-full text-center mt-2">
+                <button onClick={handleLogout}>Log out</button>
+            </div>
+        </>
+    );
+}
