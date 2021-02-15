@@ -3,6 +3,7 @@ import { TextField } from "@material-ui/core";
 import { db } from "../firebase_config";
 import firebase from "firebase";
 import TodoListTimes from "./TodoListItems";
+import Navbar from "./Navbar";
 
 export default function Todos() {
     const [todos, setTodos] = useState([]);
@@ -38,32 +39,35 @@ export default function Todos() {
     };
 
     return (
-        <div className="flex flex-col justify-items-center items-center">
-            <h1 className="">Shareef Todo App</h1>
-            <form action="">
-                <TextField
-                    id="outlined-basic"
-                    label="Write a Todo"
-                    value={todoInput}
-                    onChange={(e) => setTodoInput(e.target.value)}
-                    variant="outlined"
-                />
-                <button
-                    id="button"
-                    type="submit"
-                    variant="contained"
-                    onClick={addTodo}
-                    className="hidden"
-                ></button>
-            </form>
-            {todos.map((todoObject) => (
-                <TodoListTimes
-                    key={todoObject.id}
-                    todo={todoObject.todo}
-                    id={todoObject.id}
-                    isCompleted={todoObject.isCompleted}
-                />
-            ))}
-        </div>
+        <>
+            <Navbar />
+            <div className="flex flex-col justify-items-center items-center">
+                <h1 className="">Shareef Todo App</h1>
+                <form action="">
+                    <TextField
+                        id="outlined-basic"
+                        label="Write a Todo"
+                        value={todoInput}
+                        onChange={(e) => setTodoInput(e.target.value)}
+                        variant="outlined"
+                    />
+                    <button
+                        id="button"
+                        type="submit"
+                        variant="contained"
+                        onClick={addTodo}
+                        className="hidden"
+                    ></button>
+                </form>
+                {todos.map((todoObject) => (
+                    <TodoListTimes
+                        key={todoObject.id}
+                        todo={todoObject.todo}
+                        id={todoObject.id}
+                        isCompleted={todoObject.isCompleted}
+                    />
+                ))}
+            </div>
+        </>
     );
 }

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+import Navbar from "./Navbar";
 
 export default function Signup() {
     const emailRef = useRef();
@@ -21,7 +22,7 @@ export default function Signup() {
             setError("");
             setLoading(true);
             await signUp(emailRef.current.value, passwordRef.current.value);
-            history.push("/");
+            history.push("/todos");
         } catch {
             setError("Failed to create account!");
         }
@@ -30,6 +31,7 @@ export default function Signup() {
 
     return (
         <>
+            <Navbar />
             <div>
                 <div>
                     <h2 className="text-center mb-4">Sign up</h2>

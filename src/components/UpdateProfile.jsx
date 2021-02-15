@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+import Navbar from "./Navbar";
 
 export default function Signup() {
     const emailRef = useRef();
@@ -33,7 +34,7 @@ export default function Signup() {
 
         Promise.all(promises)
             .then(() => {
-                history.push("/");
+                history.push("/dashboard");
             })
             .catch(setError("Failed to update account"))
             .finally(() => {
@@ -45,6 +46,7 @@ export default function Signup() {
 
     return (
         <>
+            <Navbar />
             <div>
                 <div>
                     <h2 className="text-center mb-4">Update Profile</h2>

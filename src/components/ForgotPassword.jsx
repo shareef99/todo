@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import Navbar from "./Navbar";
 
 export default function Login() {
     const emailRef = useRef();
@@ -28,6 +29,7 @@ export default function Login() {
 
     return (
         <>
+            <Navbar></Navbar>
             <div>
                 <div>
                     <h2 className="text-center mb-4">Password Reset</h2>
