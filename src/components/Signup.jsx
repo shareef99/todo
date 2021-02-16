@@ -44,36 +44,55 @@ export default function Signup() {
         <>
             <Navbar />
             <div>
-                <h2 className="mb-4">Sign up</h2>
-                {error && <span>{error}</span>}
-                <form action="" onSubmit={handleSubmit} className="space-y-4">
+                {error && (
+                    <p className="mt-2 bg-red-300 px-6 py-3 rounded-md text-red-900 text-lg">
+                        {error}
+                    </p>
+                )}
+                <form
+                    action=""
+                    onSubmit={handleSubmit}
+                    className=" flex flex-col items-center space-y-2 mt-8"
+                >
                     <div id="email">
                         <TextField
                             id="standard-basic"
-                            label="Email"
                             type="email"
                             required
                             ref={emailRef}
+                            className="w-full"
+                            placeholder="Email"
+                            margin="dense"
+                            size="medium"
+                            variant="outlined"
                         />
                     </div>
                     <div id="password">
                         <TextField
                             id="standard-password-input"
-                            label="Password"
                             type="Password"
                             required
                             ref={passwordRef}
                             autoComplete="current-password"
+                            className="w-full"
+                            placeholder="Password"
+                            margin="dense"
+                            size="medium"
+                            variant="outlined"
                         />
                     </div>
                     <div id="passwordConfirm">
                         <TextField
                             id="standard-password-confirm-input"
-                            label="Confirm Password"
                             type="Password"
                             required
                             ref={passwordConfirmRef}
                             autoComplete="current-password"
+                            className="w-full"
+                            placeholder="Confirm Password"
+                            margin="dense"
+                            size="medium"
+                            variant="outlined"
                         />
                     </div>
                     <Button
@@ -84,7 +103,7 @@ export default function Signup() {
                         Sign Up
                     </Button>
                 </form>
-                <div className="mt-4">
+                <div className="mt-4 text-center">
                     Already have an account ? <Link to="/login">Log in</Link>
                 </div>
             </div>

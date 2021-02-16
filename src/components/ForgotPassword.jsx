@@ -33,7 +33,7 @@ export default function Login() {
             <Navbar></Navbar>
             <div>
                 <div>
-                    <h2 className="text-center mb-4">Password Reset</h2>
+                    <h2 className="mb-4">Password Reset</h2>
                     {error && error}
                     {message && message}
                     {/* {currentUser.email} */}

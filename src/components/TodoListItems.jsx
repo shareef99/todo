@@ -17,6 +17,7 @@ export default function TodoListItems({ todo, isCompleted, id }) {
         <div>
             <ListItem>
                 <ListItemText
+                    className="mr-6"
                     primary={todo}
                     secondary={isCompleted ? "Completed" : "in progress"}
                 />

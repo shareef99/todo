@@ -38,44 +38,61 @@ export default function Login() {
 
     return (
         <>
-            {/* {console.log(emailRef.current.lastChild.firstChild.value, emailRef)} */}
             <Navbar />
-            <div className="flex flex-col">
-                <h2 className="mb-4">Log In</h2>
-                {error && error}
-                <form action="" autoComplete="off" onSubmit={handleSubmit}>
-                    <div id="email">
+            <div className="flex flex-col  items-center mt-8">
+                {error && (
+                    <p className="mt-2 bg-red-300 px-6 py-3 rounded-md text-red-900 text-lg">
+                        {error}
+                    </p>
+                )}
+                <form
+                    action=""
+                    autoComplete="off"
+                    onSubmit={handleSubmit}
+                    className="flex flex-col space-y-2 items-center w-1/2 mt-6"
+                >
+                    <div id="email" className="w-1/2">
                         <TextField
                             id="standard-basic"
                             type="email"
                             required
                             ref={emailRef}
-                            label="Email"
+                            className="w-full"
+                            placeholder="Email"
+                            margin="dense"
+                            size="medium"
+                            variant="outlined"
                         />
                     </div>
-                    <div id="password">
+                    <div id="password" className="w-1/2">
                         <TextField
+                            className="w-full"
                             id="standard-password-input"
-                            label="Password"
                             type="Password"
                             required
                             ref={passwordRef}
                             autoComplete="current-password"
+                            placeholder="Password"
+                            margin="dense"
+                            size="medium"
+                            variant="outlined"
                         />
                     </div>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        disabled={loading}
-                    >
-                        Log In
-                    </Button>
+                    <div>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            disabled={loading}
+                        >
+                            Log In
+                        </Button>
+                    </div>
                 </form>
                 <div>
-                    <div className="mt-4 ">
+                    <div className="mt-4 text-center">
                         <Link to="/forgot-password">Forgot password?</Link>
                     </div>
-                    <div className="mt-2 ">
+                    <div className="mt-2 text-center">
                         Need an account ? <Link to="/signup">Sign up</Link>
                     </div>
                 </div>
