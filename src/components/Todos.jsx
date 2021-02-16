@@ -4,10 +4,12 @@ import { db } from "../firebase_config";
 import firebase from "firebase";
 import TodoListTimes from "./TodoListItems";
 import Navbar from "./Navbar";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Todos() {
     const [todos, setTodos] = useState([]);
     const [todoInput, setTodoInput] = useState("");
+    const { currentUser } = useAuth();
 
     useEffect(() => {
         getTodos();
@@ -15,7 +17,8 @@ export default function Todos() {
 
     const getTodos = () => {
         db.collection("todos")
-            .orderBy("timeStamp", "asc")
+            .where("uid", "==", currentUser.uid)
+            .orderBy("timeStamp", "desc")
             .onSnapshot((querySnapShot) => {
                 setTodos(
                     querySnapShot.docs.map((doc) => ({
@@ -26,6 +29,7 @@ export default function Todos() {
                     }))
                 );
             });
+        console.log(currentUser.providerData);
     };
 
     const addTodo = (e) => {
@@ -37,9 +41,7 @@ export default function Todos() {
         db.collection("todos").add({
             isCompleted: false,
             timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
-            // timeStamp: new Date(
-            //     firebase.firestore.Timestamp.now().seconds * 1000
-            // ).toLocaleDateString(),
+            uid: currentUser.uid,
             todo: todoInput,
         });
         setTodoInput("");
@@ -74,17 +76,7 @@ export default function Todos() {
                         isCompleted={todoObject.isCompleted}
                     />
                 ))}
-                {console.log(
-                    todos.sort((a, b) =>
-                        new Date(a.timeStamp).getTime() >
-                        new Date(b.timeStamp).getTime()
-                            ? 1
-                            : -1
-                    )
-                )}
             </div>
         </>
     );
 }
-
-// new Date(todo.timeStamp).getTime()
