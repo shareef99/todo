@@ -14,25 +14,32 @@ export default function Todos() {
     }, []);
 
     const getTodos = () => {
-        db.collection("todos").onSnapshot((querySnapShot) => {
-            setTodos(
-                querySnapShot.docs.map((doc) => ({
-                    id: doc.id,
-                    todo: doc.data().todo,
-                    isCompleted: doc.data().isCompleted,
-                }))
-            );
-        });
-        console.log("Get Todos");
+        db.collection("todos")
+            .orderBy("timeStamp", "asc")
+            .onSnapshot((querySnapShot) => {
+                setTodos(
+                    querySnapShot.docs.map((doc) => ({
+                        id: doc.id,
+                        todo: doc.data().todo,
+                        isCompleted: doc.data().isCompleted,
+                        timeStamp: doc.data().timeStamp,
+                    }))
+                );
+            });
     };
 
     const addTodo = (e) => {
         e.preventDefault();
         console.log("You are trying to add  todo");
         // use .doc(custom id value).set()
+        const { serverTimestamp } = firebase.firestore.FieldValue;
+
         db.collection("todos").add({
             isCompleted: false,
             timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+            // timeStamp: new Date(
+            //     firebase.firestore.Timestamp.now().seconds * 1000
+            // ).toLocaleDateString(),
             todo: todoInput,
         });
         setTodoInput("");
@@ -48,7 +55,6 @@ export default function Todos() {
                         id="outlined-basic"
                         label="Write a Todo"
                         value={todoInput}
-                        multiline
                         onChange={(e) => setTodoInput(e.target.value)}
                         variant="outlined"
                     />
@@ -68,7 +74,17 @@ export default function Todos() {
                         isCompleted={todoObject.isCompleted}
                     />
                 ))}
+                {console.log(
+                    todos.sort((a, b) =>
+                        new Date(a.timeStamp).getTime() >
+                        new Date(b.timeStamp).getTime()
+                            ? 1
+                            : -1
+                    )
+                )}
             </div>
         </>
     );
 }
+
+// new Date(todo.timeStamp).getTime()

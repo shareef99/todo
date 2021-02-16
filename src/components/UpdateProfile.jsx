@@ -52,7 +52,6 @@ export default function Signup() {
                 <div>
                     <h2 className="text-center mb-4">Update Profile</h2>
                     {error && <span>{error}</span>}
-                    {/* {currentUser.email} */}
                     <form action="" onSubmit={handleSubmit}>
                         <div id="email">
                             <TextField
@@ -65,35 +64,33 @@ export default function Signup() {
                             />
                         </div>
                         <div id="password">
-                            <label htmlFor="">Password</label>
-                            <input
-                                type="password"
+                            <TextField
+                                id="standard-password-input"
+                                placeholder="keep blank to keep the same password"
+                                type="Password"
                                 required
                                 ref={passwordRef}
-                                placeholder="Leave blank to keep the same password"
+                                autoComplete="current-password"
                             />
                         </div>
                         <div id="passwordConfirm">
-                            <label htmlFor="">Password confirmation</label>
-                            <input
-                                type="password"
+                            <TextField
+                                id="standard-password-confirm-input"
+                                placeholder="keep blank to keep the same password"
+                                type="Password"
                                 required
                                 ref={passwordConfirmRef}
-                                placeholder="Leave blank to keep the same password"
+                                autoComplete="current-password"
                             />
                         </div>
-                        <button
-                            className="w-full"
-                            type="submit"
-                            disabled={loading}
-                        >
+                        <button type="submit" disabled={loading}>
                             Update
                         </button>
                     </form>
                 </div>
             </div>
             <div className=" w-full text-center mt-2 ">
-                <Link to="/">Cancel</Link>
+                <Link to="/todos">Cancel</Link>
             </div>
         </>
     );

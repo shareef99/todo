@@ -72,7 +72,7 @@ export default function Signup() {
                             label="Confirm Password"
                             type="Password"
                             required
-                            ref={passwordRef}
+                            ref={passwordConfirmRef}
                             autoComplete="current-password"
                         />
                     </div>
