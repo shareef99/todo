@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
+import TextField from "@material-ui/core/TextField";
 
 export default function Login() {
     const emailRef = useRef();
@@ -17,7 +18,7 @@ export default function Login() {
             setMessage("");
             setError("");
             setLoading(true);
-            await resetPassword(emailRef.current.value);
+            await resetPassword(emailRef.current.lastChild.firstChild.value);
             setMessage("Check your inbox for further instructions!");
         } catch {
             setError(
@@ -38,29 +39,24 @@ export default function Login() {
                     {/* {currentUser.email} */}
                     <form action="" onSubmit={handleSubmit}>
                         <div id="email">
-                            <label htmlFor="">Email</label>
-                            <input
+                            <TextField
+                                id="standard-basic"
                                 type="email"
                                 required
                                 ref={emailRef}
-                                className="border-black border-opacity-100 border-4"
+                                label="Email"
                             />
                         </div>
-
-                        <button
-                            className="w-full"
-                            type="submit"
-                            disabled={loading}
-                        >
+                        <button type="submit" disabled={loading}>
                             Reset Password
                         </button>
                     </form>
-                    <div className=" w-full text-center mt-4 ">
+                    <div className="mt-4 ">
                         <Link to="/login">Log in</Link>
                     </div>
                 </div>
             </div>
-            <div className=" w-full text-center mt-2 ">
+            <div className="mt-2 ">
                 Need an account ? <Link to="/signup">Sign up</Link>
             </div>
         </>

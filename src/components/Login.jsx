@@ -1,12 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
+import { TextField, Button } from "@material-ui/core";
 
 export default function Login() {
     const emailRef = useRef();
     const passwordRef = useRef();
-    const { login } = useAuth();
+    const { login, currentUser } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -17,7 +18,10 @@ export default function Login() {
         try {
             setError("");
             setLoading(true);
-            await login(emailRef.current.value, passwordRef.current.value);
+            await login(
+                emailRef.current.lastChild.firstChild.value,
+                passwordRef.current.lastChild.firstChild.value
+            );
             history.push("/todos");
         } catch {
             setError("Failed to log in!");
@@ -25,44 +29,56 @@ export default function Login() {
         setLoading(false);
     }
 
+    useEffect(() => {
+        if (currentUser) {
+            history.push("/todos");
+            alert(`You are already login\nEmail: ${currentUser.email}`);
+        }
+    }, []);
+
     return (
         <>
+            {/* {console.log(emailRef.current.lastChild.firstChild.value, emailRef)} */}
             <Navbar />
-            <div>
+            <div className="flex flex-col">
+                <h2 className="mb-4">Log In</h2>
+                {error && error}
+                <form action="" autoComplete="off" onSubmit={handleSubmit}>
+                    <div id="email">
+                        <TextField
+                            id="standard-basic"
+                            type="email"
+                            required
+                            ref={emailRef}
+                            label="Email"
+                        />
+                    </div>
+                    <div id="password">
+                        <TextField
+                            id="standard-password-input"
+                            label="Password"
+                            type="Password"
+                            required
+                            ref={passwordRef}
+                            autoComplete="current-password"
+                        />
+                    </div>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        disabled={loading}
+                    >
+                        Log In
+                    </Button>
+                </form>
                 <div>
-                    <h2 className="text-center mb-4">Log In</h2>
-                    {error && error}
-                    {/* {currentUser.email} */}
-                    <form action="" onSubmit={handleSubmit}>
-                        <div id="email">
-                            <label htmlFor="">Email</label>
-                            <input
-                                type="email"
-                                required
-                                ref={emailRef}
-                                className="border-black border-opacity-100 border-4"
-                            />
-                        </div>
-                        <div id="password">
-                            <label htmlFor="">Password</label>
-                            <input type="password" required ref={passwordRef} />
-                        </div>
-
-                        <button
-                            className="w-full"
-                            type="submit"
-                            disabled={loading}
-                        >
-                            Log In
-                        </button>
-                    </form>
-                    <div className=" w-full text-center mt-4 ">
+                    <div className="mt-4 ">
                         <Link to="/forgot-password">Forgot password?</Link>
                     </div>
+                    <div className="mt-2 ">
+                        Need an account ? <Link to="/signup">Sign up</Link>
+                    </div>
                 </div>
-            </div>
-            <div className=" w-full text-center mt-2 ">
-                Need an account ? <Link to="/signup">Sign up</Link>
             </div>
         </>
     );

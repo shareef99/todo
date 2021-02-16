@@ -12,7 +12,7 @@ export default function Dashboard() {
         setError("");
         try {
             await logout();
-            history.push("/login");
+            history.push("/");
         } catch {
             setError("Failed to log out!");
         }
@@ -33,7 +33,7 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
-            <div className=" w-full text-center mt-2">
+            <div className="mt-2">
                 <button onClick={handleLogout}>Log out</button>
             </div>
         </>

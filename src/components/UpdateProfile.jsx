@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
+import TextField from "@material-ui/core/TextField";
 
 export default function Signup() {
     const emailRef = useRef();
@@ -54,13 +55,13 @@ export default function Signup() {
                     {/* {currentUser.email} */}
                     <form action="" onSubmit={handleSubmit}>
                         <div id="email">
-                            <label htmlFor="">Email</label>
-                            <input
+                            <TextField
+                                id="standard-basic"
                                 type="email"
                                 required
                                 ref={emailRef}
+                                label="Email"
                                 defaultValue={currentUser.email}
-                                className="border-black border-opacity-100 border-4"
                             />
                         </div>
                         <div id="password">

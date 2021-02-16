@@ -1,13 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
+import { TextField, Button } from "@material-ui/core";
 
 export default function Signup() {
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
-    const { signUp } = useAuth();
+    const { signUp, currentUser } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -21,7 +22,10 @@ export default function Signup() {
         try {
             setError("");
             setLoading(true);
-            await signUp(emailRef.current.value, passwordRef.current.value);
+            await signUp(
+                emailRef.current.lastChild.firstChild.value,
+                passwordRef.current.lastChild.firstChild.value
+            );
             history.push("/todos");
         } catch {
             setError("Failed to create account!");
@@ -29,48 +33,60 @@ export default function Signup() {
         setLoading(false);
     }
 
+    useEffect(() => {
+        if (currentUser) {
+            history.push("/todos");
+            alert(`You are already login\nEmail: ${currentUser.email}`);
+        }
+    }, []);
+
     return (
         <>
             <Navbar />
             <div>
-                <div>
-                    <h2 className="text-center mb-4">Sign up</h2>
-                    {error && <span>{error}</span>}
-                    {/* {currentUser.email} */}
-                    <form action="" onSubmit={handleSubmit}>
-                        <div id="email">
-                            <label htmlFor="">Email</label>
-                            <input
-                                type="email"
-                                required
-                                ref={emailRef}
-                                className="border-black border-opacity-100 border-4"
-                            />
-                        </div>
-                        <div id="password">
-                            <label htmlFor="">Password</label>
-                            <input type="password" required ref={passwordRef} />
-                        </div>
-                        <div id="passwordConfirm">
-                            <label htmlFor="">Password confirmation</label>
-                            <input
-                                type="password"
-                                required
-                                ref={passwordConfirmRef}
-                            />
-                        </div>
-                        <button
-                            className="w-full"
-                            type="submit"
-                            disabled={loading}
-                        >
-                            Sign Up
-                        </button>
-                    </form>
+                <h2 className="mb-4">Sign up</h2>
+                {error && <span>{error}</span>}
+                <form action="" onSubmit={handleSubmit} className="space-y-4">
+                    <div id="email">
+                        <TextField
+                            id="standard-basic"
+                            label="Email"
+                            type="email"
+                            required
+                            ref={emailRef}
+                        />
+                    </div>
+                    <div id="password">
+                        <TextField
+                            id="standard-password-input"
+                            label="Password"
+                            type="Password"
+                            required
+                            ref={passwordRef}
+                            autoComplete="current-password"
+                        />
+                    </div>
+                    <div id="passwordConfirm">
+                        <TextField
+                            id="standard-password-confirm-input"
+                            label="Confirm Password"
+                            type="Password"
+                            required
+                            ref={passwordRef}
+                            autoComplete="current-password"
+                        />
+                    </div>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        disabled={loading}
+                    >
+                        Sign Up
+                    </Button>
+                </form>
+                <div className="mt-4">
+                    Already have an account ? <Link to="/login">Log in</Link>
                 </div>
-            </div>
-            <div className=" w-full text-center mt-2 ">
-                Already have an account ? <Link to="/login">Log in</Link>
             </div>
         </>
     );

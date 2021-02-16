@@ -48,6 +48,7 @@ export default function Todos() {
                         id="outlined-basic"
                         label="Write a Todo"
                         value={todoInput}
+                        multiline
                         onChange={(e) => setTodoInput(e.target.value)}
                         variant="outlined"
                     />
