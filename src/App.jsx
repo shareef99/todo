@@ -35,7 +35,7 @@ function App() {
                             path="/todos"
                             component={Todos}
                         ></PrivateRoute>
-                        <Route to="/" component={Home}></Route>
+                        <Route exact to="/" component={Home}></Route>
                     </Switch>
                 </AuthProvider>
             </Router>

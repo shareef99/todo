@@ -70,7 +70,7 @@ export default function Signup() {
                     <div id="password">
                         <TextField
                             id="standard-password-input"
-                            type="Password"
+                            type="password"
                             required
                             ref={passwordRef}
                             autoComplete="current-password"
@@ -84,7 +84,7 @@ export default function Signup() {
                     <div id="passwordConfirm">
                         <TextField
                             id="standard-password-confirm-input"
-                            type="Password"
+                            type="password"
                             required
                             ref={passwordConfirmRef}
                             autoComplete="current-password"

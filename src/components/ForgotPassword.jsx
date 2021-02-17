@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 
 export default function Login() {
     const emailRef = useRef();
-    const { resetPassword } = useAuth();
+    const { resetPassword, currentUser } = useAuth();
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
@@ -32,32 +32,30 @@ export default function Login() {
         <>
             <Navbar></Navbar>
             <div>
-                <div>
-                    <h2 className="mb-4">Password Reset</h2>
-                    {error && error}
-                    {message && message}
-                    {/* {currentUser.email} */}
-                    <form action="" onSubmit={handleSubmit}>
-                        <div id="email">
-                            <TextField
-                                id="standard-basic"
-                                type="email"
-                                required
-                                ref={emailRef}
-                                label="Email"
-                            />
-                        </div>
-                        <button type="submit" disabled={loading}>
-                            Reset Password
-                        </button>
-                    </form>
-                    <div className="mt-4 ">
-                        <Link to="/login">Log in</Link>
+                <h2 className="mb-4">Password Reset</h2>
+                {error && error}
+                {message && message}
+                {currentUser && currentUser.email}
+                <form action="" onSubmit={handleSubmit}>
+                    <div id="email">
+                        <TextField
+                            id="standard-basic"
+                            type="email"
+                            required
+                            ref={emailRef}
+                            label="Email"
+                        />
                     </div>
+                    <button type="submit" disabled={loading}>
+                        Reset Password
+                    </button>
+                </form>
+                <div className="mt-4 ">
+                    <Link to="/login">Log in</Link>
                 </div>
-            </div>
-            <div className="mt-2 ">
-                Need an account ? <Link to="/signup">Sign up</Link>
+                <div className="mt-2 ">
+                    Need an account ? <Link to="/signup">Sign up</Link>
+                </div>
             </div>
         </>
     );

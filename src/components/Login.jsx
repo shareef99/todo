@@ -68,7 +68,7 @@ export default function Login() {
                         <TextField
                             className="w-full"
                             id="standard-password-input"
-                            type="Password"
+                            type="password"
                             required
                             ref={passwordRef}
                             autoComplete="current-password"

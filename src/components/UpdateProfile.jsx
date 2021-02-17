@@ -19,18 +19,23 @@ export default function Signup() {
         setError("");
         setLoading(true);
 
-        if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+        if (
+            passwordRef.current.lastChild.firstChild.value !==
+            passwordConfirmRef.current.lastChild.firstChild.value
+        ) {
             return setError("Passwords don't match!");
         }
 
         const promises = [];
 
-        if (emailRef.current.value !== currentUser.email) {
+        if (emailRef.current.lastChild.firstChild.value !== currentUser.email) {
             promises.push(updateEmail(emailRef.current.value));
         }
 
-        if (passwordRef.current.value) {
-            promises.push(updatePassword(passwordRef.current.value));
+        if (passwordRef.current.lastChild.firstChild.value) {
+            promises.push(
+                updatePassword(passwordRef.current.lastChild.firstChild.value)
+            );
         }
 
         Promise.all(promises)
@@ -50,7 +55,7 @@ export default function Signup() {
             <Navbar />
             <div>
                 <div>
-                    <h2 className="text-center mb-4">Update Profile</h2>
+                    <h2 className="mb-4">Update Profile</h2>
                     {error && <span>{error}</span>}
                     <form action="" onSubmit={handleSubmit}>
                         <div id="email">
@@ -66,9 +71,9 @@ export default function Signup() {
                         <div id="password">
                             <TextField
                                 id="standard-password-input"
-                                placeholder="keep blank to keep the same password"
-                                type="Password"
-                                required
+                                placeholder="Leave blank to keep the same password"
+                                type="password"
+                                // required
                                 ref={passwordRef}
                                 autoComplete="current-password"
                             />
@@ -76,9 +81,9 @@ export default function Signup() {
                         <div id="passwordConfirm">
                             <TextField
                                 id="standard-password-confirm-input"
-                                placeholder="keep blank to keep the same password"
-                                type="Password"
-                                required
+                                placeholder="Leave blank to keep the same password"
+                                type="password"
+                                // required
                                 ref={passwordConfirmRef}
                                 autoComplete="current-password"
                             />
@@ -89,7 +94,7 @@ export default function Signup() {
                     </form>
                 </div>
             </div>
-            <div className=" w-full text-center mt-2 ">
+            <div className="mt-2 ">
                 <Link to="/todos">Cancel</Link>
             </div>
         </>
