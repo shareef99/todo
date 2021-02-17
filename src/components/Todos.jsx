@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextField } from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 import { db } from "../firebase_config";
 import firebase from "firebase";
 import TodoListTimes from "./TodoListItems";
@@ -34,7 +34,10 @@ export default function Todos() {
     const addTodo = (e) => {
         e.preventDefault();
         // use .doc(custom id value).set()
-        const { serverTimestamp } = firebase.firestore.FieldValue;
+
+        if (todoInput === "") {
+            return;
+        }
 
         db.collection("todos").add({
             isCompleted: false,
@@ -49,24 +52,33 @@ export default function Todos() {
         <>
             <Navbar />
             <div className="flex flex-col justify-items-center items-center mt-8">
-                <form action="" className="m-4">
+                <form
+                    action=""
+                    className="m-4 flex flex-row justify-center items-center space-x-4 "
+                >
                     <TextField
                         className="w-full"
                         id="outlined-basic"
-                        label="Write a Todo"
+                        label="Add a todo"
+                        multiline
                         value={todoInput}
                         onChange={(e) => setTodoInput(e.target.value)}
                         variant="outlined"
                     />
-                    <button
+                    <Button
                         id="button"
                         type="submit"
                         variant="contained"
                         onClick={addTodo}
-                        className="hidden"
-                    ></button>
+                        className="h-5/6 flex-wrap"
+                    >
+                        Add
+                    </Button>
                 </form>
-                <div className="flex flex-col w-9/10 sm:w-4/5 md:w-1/2">
+                <div className="flex flex-col w-9/12 sm:w-4/5 md:w-10/12 lg:w-3/4">
+                    <h2 className="self-start text-2xl font-medium my-2 tracking-wide">
+                        Todos
+                    </h2>
                     {todos.map((todoObject) => (
                         <TodoListTimes
                             key={todoObject.id}

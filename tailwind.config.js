@@ -14,14 +14,23 @@ module.exports = {
         },
         maxWidth: {
             "1/2": "50%",
+            300: "300px",
         },
         minWidth: {
             "1/2": "50%",
+            300: "300px",
         },
         extend: {
             width: {
                 "9/10": "90%",
             },
+        },
+        screens: {
+            sm: "500px",
+            md: "768px",
+            lg: "1024px",
+            xl: "1280px",
+            "2xl": "1536px",
         },
     },
     variants: {

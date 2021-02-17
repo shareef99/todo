@@ -49,6 +49,7 @@ export default function Navbar() {
                         <CustomButton
                             className="bg-blue-300"
                             onClick={handleLogout}
+                            variant="outlined"
                         >
                             Log out
                         </CustomButton>
