@@ -42,6 +42,7 @@ module.exports = {
                 DEFAULT: "rgba(96, 165, 250, 1)",
                 primary: "rgba(36, 165, 250, 1)",
                 light: "rgba(96, 165, 280, 1)",
+                600: "#818CF8",
             },
             red: {
                 DEFAULT: "rgba(289, 68, 68, 1)",
@@ -56,6 +57,9 @@ module.exports = {
             black: {
                 DEFAULT: "#303030",
             },
+        },
+        gridTemplateColumns: {
+            70: "70% auto-fill",
         },
     },
     variants: {
