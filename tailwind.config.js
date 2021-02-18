@@ -24,6 +24,9 @@ module.exports = {
             width: {
                 "9/10": "90%",
             },
+            height: {
+                "9/10": "90%",
+            },
         },
         screens: {
             sm: "500px",
@@ -31,6 +34,26 @@ module.exports = {
             lg: "1024px",
             xl: "1280px",
             "2xl": "1536px",
+        },
+        colors: {
+            blue: {
+                DEFAULT: "rgba(96, 165, 250, 1)",
+                primary: "rgba(36, 165, 250, 1)",
+                light: "rgba(96, 165, 280, 1)",
+            },
+            red: {
+                DEFAULT: "rgba(289, 68, 68, 1)",
+                dark: "rgba(239, 68, 38, 1)",
+                300: "#FCA5A5",
+                900: "#7F1D1D",
+            },
+            white: {
+                DEFAULT: "#F1F5F9",
+                light: "#FAFAFA",
+            },
+            black: {
+                DEFAULT: "#303030",
+            },
         },
     },
     variants: {

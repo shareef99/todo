@@ -38,65 +38,83 @@ export default function Login() {
 
     return (
         <>
-            <Navbar />
-            <div className="flex flex-col  items-center mt-8">
-                {error && (
-                    <p className="mt-2 bg-red-300 px-6 py-3 rounded-md text-red-900 text-lg">
-                        {error}
-                    </p>
-                )}
-                <form
-                    action=""
-                    autoComplete="off"
-                    onSubmit={handleSubmit}
-                    className="flex flex-col space-y-2 items-center w-1/2 mt-6"
-                >
-                    <div id="email" className="w-1/2">
-                        <TextField
-                            id="standard-basic"
-                            type="email"
-                            required
-                            ref={emailRef}
-                            className="w-full"
-                            placeholder="Email"
-                            margin="dense"
-                            size="medium"
-                            variant="outlined"
-                        />
-                    </div>
-                    <div id="password" className="w-1/2">
-                        <TextField
-                            className="w-full"
-                            id="standard-password-input"
-                            type="password"
-                            required
-                            ref={passwordRef}
-                            autoComplete="current-password"
-                            placeholder="Password"
-                            margin="dense"
-                            size="medium"
-                            variant="outlined"
-                        />
-                    </div>
-                    <div>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            disabled={loading}
+            <section className="flex bg-white-light flex-col h-screen">
+                <Navbar />
+                <div className="m-auto">
+                    <h2 className="text-black text-center text-xl font-bold m-4">
+                        Log in to Todos
+                    </h2>
+                    <div className="flex flex-col items-center border border-black rounded-md w-72 m-auto bg-white text-black mb-8">
+                        {error && (
+                            <p className="mt-2 bg-red-300 px-6 py-3 rounded-md text-red-900 text-lg">
+                                {error}
+                            </p>
+                        )}
+                        <form
+                            action=""
+                            autoComplete="off"
+                            onSubmit={handleSubmit}
+                            className="flex flex-col space-y-2 items-center w-64 self-center mt-6"
                         >
-                            Log In
-                        </Button>
-                    </div>
-                </form>
-                <div>
-                    <div className="mt-4 text-center">
-                        <Link to="/forgot-password">Forgot password?</Link>
-                    </div>
-                    <div className="mt-2 text-center">
-                        Need an account ? <Link to="/signup">Sign up</Link>
+                            <div id="email" className="w-full">
+                                <TextField
+                                    id="standard-basic"
+                                    type="email"
+                                    required
+                                    ref={emailRef}
+                                    className="w-full"
+                                    placeholder="Email"
+                                    margin="dense"
+                                    size="medium"
+                                    variant="outlined"
+                                />
+                            </div>
+                            <div id="password" className="w-full">
+                                <TextField
+                                    className="w-full"
+                                    id="standard-password-input"
+                                    type="password"
+                                    required
+                                    ref={passwordRef}
+                                    placeholder="Password"
+                                    margin="dense"
+                                    size="medium"
+                                    variant="outlined"
+                                />
+                            </div>
+                            <div>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    disabled={loading}
+                                >
+                                    Log In
+                                </Button>
+                            </div>
+                        </form>
+                        <hr className="h-1 w-64 border-black mt-4" />
+                        <div>
+                            <div className="mt-4 text-center">
+                                <Link
+                                    to="/forgot-password"
+                                    className="text-blue font-semibold"
+                                >
+                                    Forgot password?
+                                </Link>
+                            </div>
+                            <div className="my-2 text-center">
+                                Need an account?{" "}
+                                <Link
+                                    to="/signup"
+                                    className="text-blue font-semibold"
+                                >
+                                    Sign up
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </>
     );
 }

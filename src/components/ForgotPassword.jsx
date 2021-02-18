@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 export default function Login() {
     const emailRef = useRef();
@@ -30,33 +31,71 @@ export default function Login() {
 
     return (
         <>
-            <Navbar></Navbar>
-            <div>
-                <h2 className="mb-4">Password Reset</h2>
-                {error && error}
-                {message && message}
-                {currentUser && currentUser.email}
-                <form action="" onSubmit={handleSubmit}>
-                    <div id="email">
-                        <TextField
-                            id="standard-basic"
-                            type="email"
-                            required
-                            ref={emailRef}
-                            label="Email"
-                        />
+            <section className="flex bg-white-light flex-col h-screen">
+                <Navbar />
+                <div className="m-auto">
+                    <h2 className="text-black text-center text-xl font-bold m-4">
+                        Forgot password? No worries!
+                    </h2>
+                    <div className="flex flex-col items-center border border-black rounded-md w-72 m-auto bg-white text-black mb-6">
+                        {error && (
+                            <p className="mt-2 bg-red-300 px-6 py-3 rounded-md text-red-900 text-lg">
+                                {error}
+                            </p>
+                        )}
+                        {message && (
+                            <p className="mt-2 bg-red-300 px-6 py-3 rounded-md text-red-900 text-lg">
+                                {message}
+                            </p>
+                        )}
+                        <form
+                            action=""
+                            autoComplete="off"
+                            onSubmit={handleSubmit}
+                            className="flex flex-col space-y-2 items-center w-64 self-center my-4"
+                        >
+                            <div id="email">
+                                <TextField
+                                    className="w-full"
+                                    id="standard-basic"
+                                    type="email"
+                                    required
+                                    margin="dense"
+                                    size="medium"
+                                    ref={emailRef}
+                                    placeholder="Email"
+                                    variant="outlined"
+                                />
+                            </div>
+                            <Button
+                                variant="contained"
+                                type="submit"
+                                disabled={loading}
+                            >
+                                Reset
+                            </Button>
+                        </form>
+                        <hr className="h-1 w-64 border-black mt-4" />
+                        <div className="mt-4 text-center">
+                            <Link
+                                to="/login"
+                                className="text-blue font-semibold"
+                            >
+                                Log in
+                            </Link>
+                        </div>
+                        <div className="my-4 text-center">
+                            Need an account?{" "}
+                            <Link
+                                to="/signup"
+                                className="text-blue font-semibold"
+                            >
+                                Sign up
+                            </Link>
+                        </div>
                     </div>
-                    <button type="submit" disabled={loading}>
-                        Reset Password
-                    </button>
-                </form>
-                <div className="mt-4 ">
-                    <Link to="/login">Log in</Link>
                 </div>
-                <div className="mt-2 ">
-                    Need an account ? <Link to="/signup">Sign up</Link>
-                </div>
-            </div>
+            </section>
         </>
     );
 }

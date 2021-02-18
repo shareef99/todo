@@ -39,7 +39,7 @@ export default function Navbar() {
     }
 
     return (
-        <header className="bg-blue-400 shadow-lg border-b-4 border-blue-300 flex flex-shrink-0 w-full">
+        <header className="bg-blue-light text-white shadow-lg border-b-4 border-blue flex flex-shrink-0 w-full">
             <div className="container flex flex-row justify-between items-center py-2 text-white">
                 <h6 className="text-xl font-semibold">
                     <Link to="/todos">Todos</Link>
