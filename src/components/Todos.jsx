@@ -36,7 +36,9 @@ export default function Todos() {
         // use .doc(custom id value).set()
 
         if (todoInput === "") {
-            return;
+            return alert(
+                'Todo field is empty!\nTry "Have to complete X thing"'
+            );
         }
 
         db.collection("todos").add({
@@ -50,45 +52,47 @@ export default function Todos() {
 
     return (
         <>
-            <Navbar />
-            <div className="flex flex-col justify-items-center items-center mt-8">
-                <form
-                    action=""
-                    className="m-4 flex flex-row justify-center items-center space-x-4 "
-                >
-                    <TextField
-                        className="w-full"
-                        id="outlined-basic"
-                        label="Add a todo"
-                        multiline
-                        value={todoInput}
-                        onChange={(e) => setTodoInput(e.target.value)}
-                        variant="outlined"
-                    />
-                    <Button
-                        id="button"
-                        type="submit"
-                        variant="contained"
-                        onClick={addTodo}
-                        className="h-5/6 flex-wrap"
+            <section className="flex bg-white-light flex-col h-screen">
+                <Navbar />
+                <div className="flex flex-col justify-items-center items-center mt-8 text-black">
+                    <form
+                        action=""
+                        className="m-4 flex flex-row justify-center items-center space-x-4 max-w-9/10"
                     >
-                        Add
-                    </Button>
-                </form>
-                <div className="flex flex-col w-9/12 sm:w-4/5 md:w-10/12 lg:w-3/4">
-                    <h2 className="self-start text-2xl font-medium my-2 tracking-wide">
-                        Todos
-                    </h2>
-                    {todos.map((todoObject) => (
-                        <TodoListTimes
-                            key={todoObject.id}
-                            todo={todoObject.todo}
-                            id={todoObject.id}
-                            isCompleted={todoObject.isCompleted}
+                        <TextField
+                            className="w-64"
+                            id="outlined-basic"
+                            label="Add a todo"
+                            multiline
+                            value={todoInput}
+                            onChange={(e) => setTodoInput(e.target.value)}
+                            variant="outlined"
                         />
-                    ))}
+                        <Button
+                            id="button"
+                            type="submit"
+                            variant="contained"
+                            onClick={addTodo}
+                            className="h-5/6 flex-wrap"
+                        >
+                            Add
+                        </Button>
+                    </form>
+                    <div className="flex flex-col w-9/12 sm:w-4/5 md:w-10/12 lg:w-3/4">
+                        <h2 className="self-start text-2xl font-medium my-2 tracking-wide">
+                            Todos
+                        </h2>
+                        {todos.map((todoObject) => (
+                            <TodoListTimes
+                                key={todoObject.id}
+                                todo={todoObject.todo}
+                                id={todoObject.id}
+                                isCompleted={todoObject.isCompleted}
+                            />
+                        ))}
+                    </div>
                 </div>
-            </div>
+            </section>
         </>
     );
 }

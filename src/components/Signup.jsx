@@ -44,11 +44,11 @@ export default function Signup() {
         <>
             <section className="flex bg-white-light flex-col h-screen">
                 <Navbar />
-                <div className="m-auto">
+                <div className="m-auto max-w-95">
                     <h2 className="text-black text-center text-xl font-bold m-4">
                         Welcome to Todos
                     </h2>
-                    <div className="flex flex-col items-center border-4 shadow-lg border-white rounded-md w-72 m-auto bg-white text-black mb-8">
+                    <div className="flex flex-col items-center border-4 shadow-lg border-white rounded-md w-72 max-w-95 m-auto bg-white text-black mb-8">
                         {error && (
                             <p className="mt-2 bg-red-300 px-6 py-3 rounded-md text-red-900 text-lg">
                                 {error}
@@ -57,7 +57,7 @@ export default function Signup() {
                         <form
                             action=""
                             onSubmit={handleSubmit}
-                            className=" flex flex-col items-center space-y-2 my-4"
+                            className=" flex flex-col items-center space-y-2 my-4 max-w-95"
                         >
                             <div id="email">
                                 <TextField
@@ -108,7 +108,7 @@ export default function Signup() {
                                 Sign Up
                             </Button>
                         </form>
-                        <hr className="h-1 w-64 border-black mt-4" />
+                        <hr className="h-1 w-64 max-w-95 border-black mt-4" />
                         <div className="my-4 text-center">
                             Already have an account ?{" "}
                             <Link

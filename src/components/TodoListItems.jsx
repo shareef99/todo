@@ -1,38 +1,7 @@
 import React from "react";
-import {
-    ListItem,
-    ListItemText,
-    Button,
-    IconButton,
-    withStyles,
-} from "@material-ui/core";
+import { ListItem, ListItemText } from "@material-ui/core";
 import { db } from "../firebase_config";
 import DeleteIcon from "@material-ui/icons/Delete";
-
-const green300 = "rgba(110, 231, 183, 1)";
-const green400 = "rgba(52, 211, 153, 1)";
-const red200 = "rgba(254, 202, 202,1)";
-const red300 = "rgba(252, 165, 165, 1)";
-const red400 = "rgba(248, 113, 113,1)";
-
-const DeleteButton = withStyles((theme) => ({
-    root: {
-        color: red400,
-        padding: "10px",
-        "&:hover": {
-            backgroundColor: red200,
-        },
-    },
-}))(IconButton);
-
-const DoneButton = withStyles((theme) => ({
-    root: {
-        backgroundColor: green300,
-        "&:hover": {
-            backgroundColor: green400,
-        },
-    },
-}))(Button);
 
 export default function TodoListItems({ todo, isCompleted, id }) {
     const toggleComplete = () => {
@@ -49,28 +18,28 @@ export default function TodoListItems({ todo, isCompleted, id }) {
         <>
             <ListItem className="flex flex-col sm:flex-row">
                 <ListItemText
-                    className=" self-start"
+                    className="self-start"
                     primary={todo}
                     secondary={isCompleted ? "Completed" : "in progress"}
                 />
-                <div className="flex flex-row self-start sm:self-center space-x-4">
-                    <DoneButton
+                <div className="flex flex-row items-center justify-center self-start sm:self-center space-x-4">
+                    <button
                         onClick={toggleComplete}
                         variant="outlined"
-                        className="h-8 self-center bg-red"
+                        className="border py-1 px-3 rounded bg-white-light text-black font-medium text-md tracking-wide hover:bg-white transition duration-300 ease-in"
+                        title={isCompleted ? "incomplete" : "Completed"}
                     >
                         {isCompleted ? "UnDone" : "Done"}
-                    </DoneButton>
-                    <DeleteButton
-                        // aria-label="delete"
-                        className="hover:bg-red-300"
+                    </button>
+                    <button
+                        className="text-red p-2 rounded-full hover:bg-red-300 transition duration-300 ease-in-out"
+                        title="delete"
                     >
                         <DeleteIcon
                             onClick={deleteTodo}
                             className="self-center"
-                            // aria-label="delete"
                         />
-                    </DeleteButton>
+                    </button>
                 </div>
             </ListItem>
         </>
