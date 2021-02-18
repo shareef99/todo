@@ -48,7 +48,7 @@ export default function Signup() {
                     <h2 className="text-black text-center text-xl font-bold m-4">
                         Welcome to Todos
                     </h2>
-                    <div className="flex flex-col items-center border border-black rounded-md w-72 m-auto bg-white text-black mb-6">
+                    <div className="flex flex-col items-center border-4 shadow-lg border-white rounded-md w-72 m-auto bg-white text-black mb-8">
                         {error && (
                             <p className="mt-2 bg-red-300 px-6 py-3 rounded-md text-red-900 text-lg">
                                 {error}

@@ -37,9 +37,9 @@ export default function Login() {
                     <h2 className="text-black text-center text-xl font-bold m-4">
                         Forgot password? No worries!
                     </h2>
-                    <div className="flex flex-col items-center border border-black rounded-md w-72 m-auto bg-white text-black mb-6">
+                    <div className="flex flex-col items-center border-4 border-white shadow-lg rounded-md w-72 m-auto bg-white text-black mb-8">
                         {error && (
-                            <p className="mt-2 bg-red-300 px-6 py-3 rounded-md text-red-900 text-lg">
+                            <p className="mt-4 bg-red-300 px-6 py-3 rounded-md text-red-900 text-lg">
                                 {error}
                             </p>
                         )}
