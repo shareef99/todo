@@ -73,7 +73,7 @@ export default function Todos() {
                             type="submit"
                             variant="contained"
                             onClick={addTodo}
-                            className="h-5/6 flex-wrap"
+                            className="h-12 flex-wrap"
                         >
                             Add
                         </Button>

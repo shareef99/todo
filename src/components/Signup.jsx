@@ -44,7 +44,7 @@ export default function Signup() {
         <>
             <section className="flex bg-white-light flex-col h-screen">
                 <Navbar />
-                <div className="m-auto max-w-95">
+                <div className="m-auto w-9/10 max-w-95">
                     <h2 className="text-black text-center text-xl font-bold m-4">
                         Welcome to Todos
                     </h2>
@@ -101,6 +101,7 @@ export default function Signup() {
                                 />
                             </div>
                             <Button
+                                className="w-full sm:w-auto"
                                 type="submit"
                                 variant="contained"
                                 disabled={loading}

@@ -33,7 +33,7 @@ export default function Login() {
         <>
             <section className="flex bg-white-light flex-col h-screen">
                 <Navbar />
-                <div className="m-auto max-w-95">
+                <div className="m-auto w-9/10 max-w-95">
                     <h2 className="text-black text-center text-xl font-bold m-4">
                         Forgot password? No worries!
                     </h2>
@@ -68,6 +68,7 @@ export default function Login() {
                                 />
                             </div>
                             <Button
+                                className="w-full sm:w-auto"
                                 variant="contained"
                                 type="submit"
                                 disabled={loading}
