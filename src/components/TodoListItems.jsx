@@ -11,7 +11,15 @@ export default function TodoListItems({ todo, isCompleted, id }) {
     };
 
     const deleteTodo = () => {
-        db.collection("todos").doc(id).delete();
+        db.collection("todos")
+            .doc(id)
+            .delete()
+            .then(() => {
+                console.log("Document successfully deleted!");
+            })
+            .catch((error) => {
+                console.error("Error removing document: ", error);
+            });
     };
 
     return (
@@ -34,11 +42,9 @@ export default function TodoListItems({ todo, isCompleted, id }) {
                     <button
                         className="text-red p-2 rounded-full hover:bg-red-300 transition duration-300 ease-in-out"
                         title="delete"
+                        onClick={deleteTodo}
                     >
-                        <DeleteIcon
-                            onClick={deleteTodo}
-                            className="self-center"
-                        />
+                        <DeleteIcon className="self-center" />
                     </button>
                 </div>
             </ListItem>
