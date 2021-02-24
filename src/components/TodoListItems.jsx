@@ -33,7 +33,7 @@ export default function TodoListItems({ todo, isCompleted, id, createdAt }) {
                     primary={todo}
                     secondary={`${
                         isCompleted ? "Completed" : "In progress"
-                    } CreatedAt: ${createdAt}`}
+                    } || ${createdAt ? `created at: ${createdAt}` : ""}`}
                 />
                 {/* progress */}
                 <div className="flex flex-row items-center justify-center self-start sm:self-center space-x-4">

@@ -30,6 +30,7 @@ export default function Todos() {
                         todo: doc.data().todo,
                         isCompleted: doc.data().isCompleted,
                         timeStamp: doc.data().timeStamp,
+                        date: doc.data().date,
                     }))
                 );
             });
@@ -47,6 +48,7 @@ export default function Todos() {
                         todo: doc.data().todo,
                         isCompleted: doc.data().isCompleted,
                         timeStamp: doc.data().timeStamp,
+                        date: doc.data().date,
                     }))
                 );
             });
@@ -64,7 +66,8 @@ export default function Todos() {
 
         db.collection("todos").add({
             isCompleted: false,
-            timeStamp: new Date(
+            timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+            date: new Date(
                 firebase.firestore.Timestamp.now().seconds * 1000
             ).toLocaleDateString(),
             uid: currentUser.uid,
@@ -77,7 +80,7 @@ export default function Todos() {
         <>
             <section className="flex bg-white-light flex-col h-screen">
                 <Navbar />
-                <div className="flex flex-col justify-items-center items-center mt-8 text-black">
+                <div className="flex flex-col justify-items-center items-center mt-8 text-black bg-white-light">
                     <form
                         action=""
                         className="m-4 flex flex-row justify-center items-center space-x-4 max-w-9/10"
@@ -101,33 +104,56 @@ export default function Todos() {
                             Add
                         </Button>
                     </form>
-                    <div className="flex flex-col w-9/12 sm:w-4/5 md:w-10/12 lg:w-3/4">
-                        <h2 className="self-start text-2xl font-medium my-2 tracking-wide">
-                            In process Todos
-                        </h2>
-                        {incompleteTodos.map((todoObject) => (
-                            <TodoListTimes
-                                key={todoObject.id}
-                                todo={todoObject.todo}
-                                id={todoObject.id}
-                                isCompleted={todoObject.isCompleted}
-                                createdAt={todoObject.timeStamp}
-                            />
-                        ))}
-                    </div>
-                    <div className="flex flex-col w-9/12 sm:w-4/5 md:w-10/12 lg:w-3/4">
-                        <h2 className="self-start text-2xl font-medium my-2 tracking-wide">
-                            Completed Todos
-                        </h2>
-                        {completedTodos.map((todoObject) => (
-                            <TodoListTimes
-                                key={todoObject.id}
-                                todo={todoObject.todo}
-                                id={todoObject.id}
-                                isCompleted={todoObject.isCompleted}
-                            />
-                        ))}
-                    </div>
+
+                    {completedTodos.length === 0 &&
+                        incompleteTodos.length === 0 && (
+                            <div
+                                className="flex flex-col w-9/12 sm:w-4/5
+                                md:w-10/12 lg:w-3/4"
+                            >
+                                <p className="self-center text-center text-2xl font-medium my-2 tracking-wide">
+                                    Welcome!
+                                    <br />
+                                    looks like your todo list is empty!
+                                    <br />
+                                    Add todo and start doing
+                                </p>
+                            </div>
+                        )}
+
+                    {incompleteTodos.length > 0 && (
+                        <div className="flex flex-col w-9/12 sm:w-4/5 md:w-10/12 lg:w-3/4">
+                            <h2 className="self-start text-2xl font-medium my-2 tracking-wide">
+                                In process Todos
+                            </h2>
+                            {incompleteTodos.map((todoObject) => (
+                                <TodoListTimes
+                                    key={todoObject.id}
+                                    todo={todoObject.todo}
+                                    id={todoObject.id}
+                                    isCompleted={todoObject.isCompleted}
+                                    createdAt={todoObject.date}
+                                />
+                            ))}
+                        </div>
+                    )}
+
+                    {completedTodos.length > 0 && (
+                        <div className="flex flex-col w-9/12 sm:w-4/5 md:w-10/12 lg:w-3/4 ">
+                            <h2 className="self-start text-2xl font-medium my-2 tracking-wide">
+                                Completed Todos
+                            </h2>
+                            {completedTodos.map((todoObject) => (
+                                <TodoListTimes
+                                    key={todoObject.id}
+                                    todo={todoObject.todo}
+                                    id={todoObject.id}
+                                    isCompleted={todoObject.isCompleted}
+                                    createdAt={todoObject.date}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
             </section>
         </>
