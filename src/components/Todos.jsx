@@ -8,19 +8,40 @@ import { useAuth } from "../contexts/AuthContext";
 
 export default function Todos() {
     const [todos, setTodos] = useState([]);
+    const [completedTodos, setCompletedTodos] = useState([]);
+    const [incompleteTodos, setIncompleteTodos] = useState([]);
     const [todoInput, setTodoInput] = useState("");
     const { currentUser } = useAuth();
 
     useEffect(() => {
-        getTodos();
+        getCompletedTodos();
+        getIncompleteTodos();
     }, []);
 
-    const getTodos = () => {
+    const getCompletedTodos = () => {
         db.collection("todos")
             .where("uid", "==", currentUser.uid)
+            .where("isCompleted", "==", true)
             .orderBy("timeStamp", "desc")
             .onSnapshot((querySnapShot) => {
-                setTodos(
+                setCompletedTodos(
+                    querySnapShot.docs.map((doc) => ({
+                        id: doc.id,
+                        todo: doc.data().todo,
+                        isCompleted: doc.data().isCompleted,
+                        timeStamp: doc.data().timeStamp,
+                    }))
+                );
+            });
+    };
+
+    const getIncompleteTodos = () => {
+        db.collection("todos")
+            .where("uid", "==", currentUser.uid)
+            .where("isCompleted", "==", false)
+            .orderBy("timeStamp", "desc")
+            .onSnapshot((querySnapShot) => {
+                setIncompleteTodos(
                     querySnapShot.docs.map((doc) => ({
                         id: doc.id,
                         todo: doc.data().todo,
@@ -80,9 +101,22 @@ export default function Todos() {
                     </form>
                     <div className="flex flex-col w-9/12 sm:w-4/5 md:w-10/12 lg:w-3/4">
                         <h2 className="self-start text-2xl font-medium my-2 tracking-wide">
-                            Todos
+                            In process Todos
                         </h2>
-                        {todos.map((todoObject) => (
+                        {incompleteTodos.map((todoObject) => (
+                            <TodoListTimes
+                                key={todoObject.id}
+                                todo={todoObject.todo}
+                                id={todoObject.id}
+                                isCompleted={todoObject.isCompleted}
+                            />
+                        ))}
+                    </div>
+                    <div className="flex flex-col w-9/12 sm:w-4/5 md:w-10/12 lg:w-3/4">
+                        <h2 className="self-start text-2xl font-medium my-2 tracking-wide">
+                            Completed Todos
+                        </h2>
+                        {completedTodos.map((todoObject) => (
                             <TodoListTimes
                                 key={todoObject.id}
                                 todo={todoObject.todo}

@@ -28,8 +28,9 @@ export default function TodoListItems({ todo, isCompleted, id }) {
                 <ListItemText
                     className="self-start"
                     primary={todo}
-                    secondary={isCompleted ? "Completed" : "in progress"}
+                    secondary={`${isCompleted ? "Completed" : "In progress"}`}
                 />
+                {/* progress */}
                 <div className="flex flex-row items-center justify-center self-start sm:self-center space-x-4">
                     <button
                         onClick={toggleComplete}
