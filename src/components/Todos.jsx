@@ -64,7 +64,9 @@ export default function Todos() {
 
         db.collection("todos").add({
             isCompleted: false,
-            timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+            timeStamp: new Date(
+                firebase.firestore.Timestamp.now().seconds * 1000
+            ).toLocaleDateString(),
             uid: currentUser.uid,
             todo: todoInput,
         });
@@ -109,6 +111,7 @@ export default function Todos() {
                                 todo={todoObject.todo}
                                 id={todoObject.id}
                                 isCompleted={todoObject.isCompleted}
+                                createdAt={todoObject.timeStamp}
                             />
                         ))}
                     </div>

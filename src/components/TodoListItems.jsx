@@ -3,7 +3,10 @@ import { ListItem, ListItemText } from "@material-ui/core";
 import { db } from "../firebase_config";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-export default function TodoListItems({ todo, isCompleted, id }) {
+export default function TodoListItems({ todo, isCompleted, id, createdAt }) {
+    const date = createdAt;
+    let shareef = date;
+
     const toggleComplete = () => {
         db.collection("todos").doc(id).update({
             isCompleted: !isCompleted,
@@ -28,7 +31,9 @@ export default function TodoListItems({ todo, isCompleted, id }) {
                 <ListItemText
                     className="self-start"
                     primary={todo}
-                    secondary={`${isCompleted ? "Completed" : "In progress"}`}
+                    secondary={`${
+                        isCompleted ? "Completed" : "In progress"
+                    } CreatedAt: ${createdAt}`}
                 />
                 {/* progress */}
                 <div className="flex flex-row items-center justify-center self-start sm:self-center space-x-4">
