@@ -14,45 +14,27 @@ export default function Todos() {
     const { currentUser } = useAuth();
 
     useEffect(() => {
-        getCompletedTodos();
-        getIncompleteTodos();
+        function getTodos(todoState, setFunction) {
+            db.collection("todos")
+                .where("uid", "==", currentUser.uid)
+                .where("isCompleted", "==", todoState)
+                .orderBy("timeStamp", "desc")
+                .onSnapshot((querySnapShot) => {
+                    setFunction(
+                        querySnapShot.docs.map((doc) => ({
+                            id: doc.id,
+                            todo: doc.data().todo,
+                            isCompleted: doc.data().isCompleted,
+                            timeStamp: doc.data().timeStamp,
+                            date: doc.data().date,
+                        }))
+                    );
+                });
+        }
+
+        getTodos(true, setCompletedTodos);
+        getTodos(false, setIncompleteTodos);
     }, []);
-
-    const getCompletedTodos = () => {
-        db.collection("todos")
-            .where("uid", "==", currentUser.uid)
-            .where("isCompleted", "==", true)
-            .orderBy("timeStamp", "desc")
-            .onSnapshot((querySnapShot) => {
-                setCompletedTodos(
-                    querySnapShot.docs.map((doc) => ({
-                        id: doc.id,
-                        todo: doc.data().todo,
-                        isCompleted: doc.data().isCompleted,
-                        timeStamp: doc.data().timeStamp,
-                        date: doc.data().date,
-                    }))
-                );
-            });
-    };
-
-    const getIncompleteTodos = () => {
-        db.collection("todos")
-            .where("uid", "==", currentUser.uid)
-            .where("isCompleted", "==", false)
-            .orderBy("timeStamp", "desc")
-            .onSnapshot((querySnapShot) => {
-                setIncompleteTodos(
-                    querySnapShot.docs.map((doc) => ({
-                        id: doc.id,
-                        todo: doc.data().todo,
-                        isCompleted: doc.data().isCompleted,
-                        timeStamp: doc.data().timeStamp,
-                        date: doc.data().date,
-                    }))
-                );
-            });
-    };
 
     const addTodo = (e) => {
         e.preventDefault();
@@ -72,6 +54,7 @@ export default function Todos() {
             ).toLocaleDateString(),
             uid: currentUser.uid,
             todo: todoInput,
+            completedAt: null,
         });
         setTodoInput("");
     };
@@ -105,6 +88,40 @@ export default function Todos() {
                         </Button>
                     </form>
 
+                    {incompleteTodos.length > 0 && (
+                        <div className="flex flex-col w-9/12 sm:w-4/5 md:w-10/12 lg:w-3/4">
+                            <h2 className="self-start text-2xl font-medium my-2 tracking-wide">
+                                Todos
+                            </h2>
+                            {incompleteTodos.map((todoObject) => (
+                                <TodoListTimes
+                                    key={todoObject.id}
+                                    todo={todoObject.todo}
+                                    id={todoObject.id}
+                                    isCompleted={todoObject.isCompleted}
+                                    createdAt={todoObject.date}
+                                    completedAt={todoObject.completedAt}
+                                />
+                            ))}
+                        </div>
+                    )}
+                    {completedTodos.length > 0 && (
+                        <div className="flex flex-col w-9/12 sm:w-4/5 md:w-10/12 lg:w-3/4 ">
+                            <h2 className="self-start text-2xl font-medium my-2 tracking-wide">
+                                Completed Todos
+                            </h2>
+                            {completedTodos.map((todoObject) => (
+                                <TodoListTimes
+                                    key={todoObject.id}
+                                    todo={todoObject.todo}
+                                    id={todoObject.id}
+                                    isCompleted={todoObject.isCompleted}
+                                    createdAt={todoObject.date}
+                                    completedAt={todoObject.completedAt}
+                                />
+                            ))}
+                        </div>
+                    )}
                     {completedTodos.length === 0 &&
                         incompleteTodos.length === 0 && (
                             <div
@@ -120,40 +137,6 @@ export default function Todos() {
                                 </p>
                             </div>
                         )}
-
-                    {incompleteTodos.length > 0 && (
-                        <div className="flex flex-col w-9/12 sm:w-4/5 md:w-10/12 lg:w-3/4">
-                            <h2 className="self-start text-2xl font-medium my-2 tracking-wide">
-                                In process Todos
-                            </h2>
-                            {incompleteTodos.map((todoObject) => (
-                                <TodoListTimes
-                                    key={todoObject.id}
-                                    todo={todoObject.todo}
-                                    id={todoObject.id}
-                                    isCompleted={todoObject.isCompleted}
-                                    createdAt={todoObject.date}
-                                />
-                            ))}
-                        </div>
-                    )}
-
-                    {completedTodos.length > 0 && (
-                        <div className="flex flex-col w-9/12 sm:w-4/5 md:w-10/12 lg:w-3/4 ">
-                            <h2 className="self-start text-2xl font-medium my-2 tracking-wide">
-                                Completed Todos
-                            </h2>
-                            {completedTodos.map((todoObject) => (
-                                <TodoListTimes
-                                    key={todoObject.id}
-                                    todo={todoObject.todo}
-                                    id={todoObject.id}
-                                    isCompleted={todoObject.isCompleted}
-                                    createdAt={todoObject.date}
-                                />
-                            ))}
-                        </div>
-                    )}
                 </div>
             </section>
         </>
